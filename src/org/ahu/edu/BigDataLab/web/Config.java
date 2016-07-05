@@ -7,8 +7,9 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
-
-
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.c3p0.C3p0Plugin;
+import org.ahu.edu.BigDataLab.DB.*;
 
 public class Config extends JFinalConfig {
 
@@ -30,6 +31,13 @@ public class Config extends JFinalConfig {
     @Override
     public void configPlugin(Plugins me) {
 
+        C3p0Plugin cp = new C3p0Plugin(getProperty("jdbc:mysql://172.19.142.178/sjms"),
+                getProperty("root"), getProperty("lemon123"));
+        me.add(cp);
+        ActiveRecordPlugin arp = new ActiveRecordPlugin(cp);
+        me.add(arp);
+        arp.addMapping("user", User.class);
+        arp.addMapping("job", Job.class);
     }
 
     @Override
