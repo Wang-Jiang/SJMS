@@ -31,13 +31,12 @@ public class Config extends JFinalConfig {
     @Override
     public void configPlugin(Plugins me) {
 
-        C3p0Plugin cp = new C3p0Plugin(getProperty("jdbc:mysql://172.19.142.178/sjms"),
-                getProperty("root"), getProperty("lemon123"));
+        C3p0Plugin cp = new C3p0Plugin("jdbc:mysql://172.19.142.178:3306/sjms", "root", "lemon123");
         me.add(cp);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(cp);
         me.add(arp);
-        arp.addMapping("user", User.class);
-        arp.addMapping("job", Job.class);
+        arp.addMapping("user", "uid", User.class);
+        arp.addMapping("job", "uid, jid", Job.class);
     }
 
     @Override
