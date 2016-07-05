@@ -3,6 +3,7 @@ package org.ahu.edu.BigDataLab.util;
 /**
  * Created by plutolove on 16-7-3.
  */
+
 import java.net.URI;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
@@ -70,18 +71,18 @@ public class HdfsDao {
     }
     //读取文件前100行
     public String getTop100(String file) throws IOException {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         Path path = new Path(file);
         FileSystem fs = FileSystem.get(URI.create(url), conf);
         InputStream in = fs.open(path);
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         String line = null;
         for(int i=0; i<100 && (line = br.readLine())!=null; i++) {
-            res = res + line+"\n";
+            res = res.append(line+"<br>");
         }
         br.close();
         in.close();
         fs.close();
-        return res;
+        return res.toString();
     }
 }
